@@ -16,7 +16,7 @@ wss.on('connection', (ws) => {
   // Message event handler
   ws.on('message', (message) => {
     console.log(`Received: ${message}`);
-    ws.send(message);
+    ws.send(`${message}`);
   });
 
   // Close event handler
