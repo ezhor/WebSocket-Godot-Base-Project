@@ -1,3 +1,4 @@
+const uuid = require('short-uuid'')
 const WebSocket = require('ws');
 
 // Create a WebSocket server on port 8080
@@ -10,13 +11,12 @@ wss.on('connection', (ws) => {
   console.log('New client connected');
   
   // Send a welcome message to the client
-  ws.send('Welcome to the WebSocket server!');
+  ws.send(uuid.generate/());
 
   // Message event handler
   ws.on('message', (message) => {
     console.log(`Received: ${message}`);
-    // Echo the message back to the client
-    ws.send(`Server received: ${message}`);
+    ws.send(${message}`);
   });
 
   // Close event handler
