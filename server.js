@@ -1,4 +1,4 @@
-const uuid = require('short-uuid'')
+const uuid = require('short-uuid')
 const WebSocket = require('ws');
 
 // Create a WebSocket server on port 8080
