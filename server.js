@@ -11,7 +11,7 @@ wss.on('connection', (ws) => {
   console.log('New client connected');
   
   // Send a welcome message to the client
-  ws.send(uuid.generate/());
+  ws.send(uuid.generate());
 
   // Message event handler
   ws.on('message', (message) => {
