@@ -38,6 +38,9 @@ wss.on('connection', (ws) => {
     ws.on('close', () => {
         var identity = connections.indexOf(ws)
         connections.splice(identity, 1);
+        for(var i=0; i < connections.length; i++){
+            connections[i].send("server@enemy@" + identity + "@destroy");
+        }
         console.log('Client disconnected with id: ' + identity);
   });
 });
