@@ -23,7 +23,7 @@ wss.on('connection', (ws) => {
     for(var i; i < connections.length; i++){
         if(i != identity){
             ws.send("server@enemy@" + i);
-            connections[i].send(ws.send("server@enemy@" + identity);)
+            connections[i].send("server@enemy@" + identity);
         }
     }
 
