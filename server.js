@@ -1,25 +1,29 @@
 const crypto = require('crypto')
 const WebSocket = require('ws');
+const HttpsServer = require('https').createServer;
+const fs = require("fs");
 
-// Create a WebSocket server on port 8080
-const wss = new WebSocket.Server({ port: 8080 });
+const server = HttpsServer({
+    cert: fs.readFileSync("/etc/letsencrypt/live/b06facc6-22ef-4f39-bd22-884ad04bcaa4.clouding.host/fullchain.pem"),
+    key: fs.readFileSync("/etc/letsencrypt/live/b06facc6-22ef-4f39-bd22-884ad04bcaa4.clouding.host/privkey.pem"),
+    port: 8080
+})
 
-console.log('WebSocket server is running on ws://localhost:8080');
 
-// Connection event handler
+const wss = new WebSocket.Server({ server: server });
+
+console.log('WebSocket server is running on wss://localhost:8080');
+
 wss.on('connection', (ws) => {
   console.log('New client connected');
   
-  // Send a welcome message to the client
   ws.send(crypto.randomUUID());
 
-  // Message event handler
   ws.on('message', (message) => {
     console.log(`Received: ${message}`);
     ws.send(`${message}`);
   });
 
-  // Close event handler
   ws.on('close', () => {
     console.log('Client disconnected');
   });
