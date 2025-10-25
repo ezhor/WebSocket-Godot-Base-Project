@@ -30,7 +30,7 @@ wss.on('connection', (ws) => {
     ws.on('message', (message) => {
         for(var i=0; i < connections.length; i++){
             if(i != identity){
-                connections[i].send(message);
+                connections[i].send("" + message);
             }
         }
     });
