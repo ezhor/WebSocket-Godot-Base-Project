@@ -9,14 +9,15 @@ const server = HttpsServer({
 
 
 const wss = new WebSocket.Server({ server: server });
-const connections = []
+const connections = new Array(20).fill(null);
 
 console.log('WebSocket server is running on wss://localhost:8080');
 
 
 wss.on('connection', (ws) => {
-    connections.push(ws);
-    var identity = connections.length - 1
+    var identity = connections.indexOf(null);
+    connectinos[identity] = ws;
+
     console.log('New client connected with id: ' + identity);
     ws.send("server@identity@" + identity);
 
@@ -37,7 +38,7 @@ wss.on('connection', (ws) => {
 
     ws.on('close', () => {
         var identity = connections.indexOf(ws)
-        connections.splice(identity, 1);
+        connections[identity] = null;
         for(var i=0; i < connections.length; i++){
             connections[i].send("server@enemy@" + identity + "@destroy");
         }
