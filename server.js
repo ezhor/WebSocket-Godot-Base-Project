@@ -5,8 +5,7 @@ const fs = require("fs");
 
 const server = HttpsServer({
     cert: fs.readFileSync("/etc/letsencrypt/live/b06facc6-22ef-4f39-bd22-884ad04bcaa4.clouding.host/fullchain.pem"),
-    key: fs.readFileSync("/etc/letsencrypt/live/b06facc6-22ef-4f39-bd22-884ad04bcaa4.clouding.host/privkey.pem"),
-    port: 8080
+    key: fs.readFileSync("/etc/letsencrypt/live/b06facc6-22ef-4f39-bd22-884ad04bcaa4.clouding.host/privkey.pem")
 })
 
 
@@ -28,3 +27,5 @@ wss.on('connection', (ws) => {
     console.log('Client disconnected');
   });
 });
+
+server.listen(8080)
