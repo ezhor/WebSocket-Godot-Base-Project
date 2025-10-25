@@ -16,9 +16,16 @@ console.log('WebSocket server is running on wss://localhost:8080');
 
 wss.on('connection', (ws) => {
     connections.push(ws);
-    var index = connections.length - 1
-    console.log('New client connected: ' + index);
-    ws.send("server@identity@" + index);
+    var identity = connections.length - 1
+    console.log('New client connected: ' + identity);
+    ws.send("server@identity@" + identity);
+
+    for(var i; i < connections.length; i++){
+        if(i != identity){
+            ws.send("server@enemy@" + i);
+            connections[i].send(ws.send("server@enemy@" + identity);)
+        }
+    }
 
     ws.on('message', (message) => {
         console.log(`Received: ${message}`);
@@ -26,9 +33,9 @@ wss.on('connection', (ws) => {
     });
 
     ws.on('close', () => {
-        var index = connections.indexOf(ws)
-        connections.splice(index, 1);
-        console.log('Client disconnected: ' + index);
+        var identity = connections.indexOf(ws)
+        connections.splice(identity, 1);
+        console.log('Client disconnected: ' + identity);
   });
 });
 
