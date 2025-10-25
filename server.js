@@ -25,7 +25,7 @@ wss.on('connection', (ws) => {
     });
 
     ws.on('close', () => {
-        conections.splice(connections.indexOf(ws), 1);
+        connections.splice(connections.indexOf(ws), 1);
         console.log('Client disconnected');
   });
 });
