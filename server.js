@@ -21,14 +21,16 @@ wss.on('connection', (ws) => {
     ws.send("server@identity@" + identity);
 
     for(var i; i < connections.length; i++){
+        console.log("Trying to send to: " + i)
         if(i != identity){
+            console.log("Sending to: " + i)
             ws.send("server@enemy@" + i);
             connections[i].send("server@enemy@" + identity);
         }
     }
 
     ws.on('message', (message) => {
-        console.log(`Received: ${message}`);
+        //console.log(`Received: ${message}`);
     });
 
     ws.on('close', () => {
