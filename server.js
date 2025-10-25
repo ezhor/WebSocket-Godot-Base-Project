@@ -17,7 +17,7 @@ console.log('WebSocket server is running on wss://localhost:8080');
 wss.on('connection', (ws) => {
     connections.push(ws);
     console.log('New client connected');
-    ws.send("identity@" + connections.length);
+    ws.send("identity@" + connections.length - 1);
 
     ws.on('message', (message) => {
         console.log(`Received: ${message}`);
