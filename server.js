@@ -20,7 +20,7 @@ wss.on('connection', (ws) => {
     console.log('New client connected: ' + identity);
     ws.send("server@identity@" + identity);
 
-    for(var i; i < connections.length; i++){
+    for(var i=0; i < connections.length; i++){
         console.log("Trying to send to: " + i)
         if(i != identity){
             console.log("Sending to: " + i)
