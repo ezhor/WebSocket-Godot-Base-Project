@@ -23,8 +23,8 @@ wss.on('connection', (ws) => {
 
     for(var i=0; i < connections.length; i++){
         if(i != identity){
-            ws.send("server@enemy@" + i);
             if(connections[i] != null){
+                ws.send("server@enemy@" + i);
                 connections[i].send("server@enemy@" + identity);
             }
         }
@@ -39,13 +39,13 @@ wss.on('connection', (ws) => {
     });
 
     ws.on('close', () => {
-        var identity = connections.indexOf(ws)
+        var identity = connections.indexOf(ws)        
         connections[identity] = null;
         for(var i=0; i < connections.length; i++){
             if(connections[i] != null){
                 connections[i].send("server@enemy@" + identity + "@destroy");
             }
-        }
+        }        
         console.log('Client disconnected with id: ' + identity);
   });
 });
