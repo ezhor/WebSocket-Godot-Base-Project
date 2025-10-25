@@ -1,4 +1,3 @@
-const crypto = require('crypto')
 const WebSocket = require('ws');
 const HttpsServer = require('https').createServer;
 const fs = require("fs");
@@ -10,21 +9,24 @@ const server = HttpsServer({
 
 
 const wss = new WebSocket.Server({ server: server });
+const connections = []
 
 console.log('WebSocket server is running on wss://localhost:8080');
 
+
 wss.on('connection', (ws) => {
-  console.log('New client connected');
-  
-  ws.send(crypto.randomUUID());
+    connections.push(ws);
+    console.log('New client connected');
+    ws.send("identity@" + connections.length());
 
-  ws.on('message', (message) => {
-    console.log(`Received: ${message}`);
-    ws.send(`${message}`);
-  });
+    ws.on('message', (message) => {
+        console.log(`Received: ${message}`);
+        ws.send(`${message}`);
+    });
 
-  ws.on('close', () => {
-    console.log('Client disconnected');
+    ws.on('close', () => {
+        conections.splice(connections.indexOf(ws), 1);
+        console.log('Client disconnected');
   });
 });
 
