@@ -24,13 +24,15 @@ wss.on('connection', (ws) => {
     for(var i=0; i < connections.length; i++){
         if(i != identity){
             ws.send("server@enemy@" + i);
-            connections[i].send("server@enemy@" + identity);
+            if(connections[i] != null){
+                connections[i].send("server@enemy@" + identity);
+            }
         }
     }
 
     ws.on('message', (message) => {
         for(var i=0; i < connections.length; i++){
-            if(i != identity){
+            if(connections[i] != null && i != identity){
                 connections[i].send("" + message);
             }
         }
@@ -40,7 +42,9 @@ wss.on('connection', (ws) => {
         var identity = connections.indexOf(ws)
         connections[identity] = null;
         for(var i=0; i < connections.length; i++){
-            connections[i].send("server@enemy@" + identity + "@destroy");
+            if(connections[i] != null){
+                connections[i].send("server@enemy@" + identity + "@destroy");
+            }
         }
         console.log('Client disconnected with id: ' + identity);
   });
