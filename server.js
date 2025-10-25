@@ -16,8 +16,9 @@ console.log('WebSocket server is running on wss://localhost:8080');
 
 wss.on('connection', (ws) => {
     connections.push(ws);
+    var index = connections.length - 1
     console.log('New client connected');
-    ws.send("identity@" + connections.length - 1);
+    ws.send("identity@" + index);
 
     ws.on('message', (message) => {
         console.log(`Received: ${message}`);
@@ -25,8 +26,9 @@ wss.on('connection', (ws) => {
     });
 
     ws.on('close', () => {
-        connections.splice(connections.indexOf(ws), 1);
-        console.log('Client disconnected');
+        var index = connections.indexOf(ws)
+        connections.splice(index, 1);
+        console.log('Client disconnected: ' + index);
   });
 });
 
