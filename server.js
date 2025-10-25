@@ -18,7 +18,7 @@ wss.on('connection', (ws) => {
     connections.push(ws);
     var index = connections.length - 1
     console.log('New client connected: ' + index);
-    ws.send("identity@" + index);
+    ws.send("server@identity@" + index);
 
     ws.on('message', (message) => {
         console.log(`Received: ${message}`);
